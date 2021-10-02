@@ -1,5 +1,5 @@
 <ion-content>
-  <ng-container *ngIf="moviesInTheatres.length > 0">
+  <ng-container *ngIf="moviesInTheatres.length > 0; else loading">
     <ion-slides [options]="slidesOpts">
       <ion-slide *ngFor="let movie of moviesInTheatres">
         <ion-card>
@@ -9,3 +9,7 @@
     </ion-slides>
   </ng-container>
 </ion-content>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>
