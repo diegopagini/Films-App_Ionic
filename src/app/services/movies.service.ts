@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { MDBResponse } from '../interfaces/interfaces';
+import {
+  CreditsResponse,
+  MDBResponse,
+  MovieDetail,
+} from '../interfaces/interfaces';
 
 const apiKey: string = environment.apiKey;
 const baseUrl: string = environment.baseUrl;
@@ -25,6 +29,14 @@ export class MoviesService {
     this.popularMoviesPage++;
     const query: string = `/discover/movie?sort_by=popularity.desc&page=${this.popularMoviesPage}`;
     return this.setQuery<MDBResponse>(query);
+  }
+
+  public getMovieDetail(id: number): Observable<MovieDetail> {
+    return this.setQuery<MovieDetail>(`/movie/${id}?a=1`);
+  }
+
+  public getMovieActors(id: number): Observable<CreditsResponse> {
+    return this.setQuery<CreditsResponse>(`/movie/${id}/credits?a=1`);
   }
 
   private setQuery<T>(query: string) {
