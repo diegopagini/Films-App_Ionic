@@ -1,23 +1,23 @@
 export interface MDBResponse {
   page: number;
-  totalResults: number;
-  totalPages: number;
+  total_results: number;
+  total_pages: number;
   results: Movie[];
 }
 
 export interface Movie {
-  voteCount: number;
+  vote_count: number;
   id: number;
   video: boolean;
-  voteAverage: number;
+  vote_average: number;
   title: string;
   popularity: number;
-  posterPath: string;
-  originalLanguage: string;
-  originalTitle: string;
-  genreIds: number[];
-  backdropPath?: string;
+  poster_path: string;
+  original_language: string;
+  original_title: string;
+  genre_ids: number[];
+  backdrop_path?: string;
   adult: boolean;
   overview: string;
-  releaseDate: string;
+  release_date: string;
 }

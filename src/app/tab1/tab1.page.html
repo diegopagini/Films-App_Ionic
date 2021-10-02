@@ -1,13 +1,11 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Tab 1 </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ng-container *ngIf="moviesInTheatres.length > 0">
+    <ion-slides [options]="slidesOpts">
+      <ion-slide *ngFor="let movie of moviesInTheatres">
+        <ion-card>
+          <img [src]="movie.backdrop_path | Image" [alt]="movie.title" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </ng-container>
 </ion-content>
