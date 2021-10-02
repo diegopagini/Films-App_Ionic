@@ -17,9 +17,13 @@ export class MoviesService {
   }
 
   public getMoviesInTheatres(): Observable<MDBResponse> {
-    return this.http.get<MDBResponse>(
-      `${baseUrl}${this.moviesInTheatres}&api_key=${apiKey}`
-    );
+    return this.setQuery<MDBResponse>(this.moviesInTheatres);
+  }
+
+  private setQuery<T>(query: string) {
+    query = baseUrl + query;
+    query += `&api_key=${apiKey}&language=es&include_image_language=es`;
+    return this.http.get<T>(query);
   }
 
   private getCurrentDate() {
