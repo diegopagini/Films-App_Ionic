@@ -18,6 +18,18 @@
     </ion-grid>
 
     <app-slideshow-poster [movies]="moviesInTheatres"></app-slideshow-poster>
+
+    <!-- Populares -->
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col> Cartelera </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <app-slideshow-pairs
+      [movies]="popularMovies"
+      (loadMore)="loadMoreMovies()"
+    ></app-slideshow-pairs>
   </ng-container>
 </ion-content>
 

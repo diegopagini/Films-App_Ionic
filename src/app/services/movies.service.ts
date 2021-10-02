@@ -12,12 +12,19 @@ const baseUrl: string = environment.baseUrl;
 })
 export class MoviesService {
   private moviesInTheatres: string;
+  private popularMoviesPage: number = 0;
   constructor(private http: HttpClient) {
     this.getCurrentDate();
   }
 
   public getMoviesInTheatres(): Observable<MDBResponse> {
     return this.setQuery<MDBResponse>(this.moviesInTheatres);
+  }
+
+  public getPopularMovies(): Observable<MDBResponse> {
+    this.popularMoviesPage++;
+    const query: string = `/discover/movie?sort_by=popularity.desc&page=${this.popularMoviesPage}`;
+    return this.setQuery<MDBResponse>(query);
   }
 
   private setQuery<T>(query: string) {

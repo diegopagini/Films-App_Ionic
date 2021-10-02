@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class Tab1Page implements OnInit, OnDestroy {
   public moviesInTheatres: Movie[] = [];
+  public popularMovies: Movie[] = [];
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(private moviesService: MoviesService) {}
@@ -21,6 +22,22 @@ export class Tab1Page implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((resp: MDBResponse) => {
         this.moviesInTheatres = resp.results;
+      });
+
+    this.getPopularMovies();
+  }
+
+  public loadMoreMovies() {
+    this.getPopularMovies();
+  }
+
+  private getPopularMovies() {
+    this.moviesService
+      .getPopularMovies()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((resp: MDBResponse) => {
+        const arrTemp = [...this.popularMovies, ...resp.results];
+        this.popularMovies = arrTemp;
       });
   }
 

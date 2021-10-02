@@ -1,0 +1,14 @@
+.poster {
+  max-width: 110px;
+}
+
+.slide-more {
+  align-items: center;
+  display: flex;
+  min-height: 300px;
+  justify-content: center;
+
+  &__btn {
+    max-width: 100px;
+  }
+}

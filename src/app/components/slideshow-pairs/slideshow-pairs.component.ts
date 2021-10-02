@@ -1,18 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Movie } from 'src/app/interfaces/interfaces';
 import { DetailsComponent } from '../details/details.component';
 
 @Component({
-  selector: 'app-slideshow-poster',
-  templateUrl: './slideshow-poster.component.html',
-  styleUrls: ['./slideshow-poster.component.scss'],
+  selector: 'app-slideshow-pairs',
+  templateUrl: './slideshow-pairs.component.html',
+  styleUrls: ['./slideshow-pairs.component.scss'],
 })
-export class SlideshowPosterComponent {
+export class SlideshowPairsComponent {
   @Input() movies: Movie[];
+  @Output() loadMore: EventEmitter<any> = new EventEmitter();
   public slidesOpts: Object = {
     slidesPerView: 4,
     freeMode: true,
+    spaceBetween: -10,
   };
 
   constructor(private modalController: ModalController) {}
@@ -26,5 +28,9 @@ export class SlideshowPosterComponent {
     });
 
     modal.present();
+  }
+
+  public onClick() {
+    this.loadMore.emit();
   }
 }
