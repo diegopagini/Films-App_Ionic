@@ -11,10 +11,6 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class Tab1Page implements OnInit, OnDestroy {
   public moviesInTheatres: Movie[] = [];
-  public slidesOpts: Object = {
-    slidesPerView: 1.3,
-    freeMode: true,
-  };
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(private moviesService: MoviesService) {}

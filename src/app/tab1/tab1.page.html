@@ -1,12 +1,23 @@
 <ion-content>
+  <!-- Películas Nuevas -->
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col> Películas Nuevas </ion-col>
+    </ion-row>
+  </ion-grid>
   <ng-container *ngIf="moviesInTheatres.length > 0; else loading">
-    <ion-slides [options]="slidesOpts">
-      <ion-slide *ngFor="let movie of moviesInTheatres">
-        <ion-card>
-          <img [src]="movie.backdrop_path | Image" [alt]="movie.title" />
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
+    <app-slideshow-backdrop
+      [movies]="moviesInTheatres"
+    ></app-slideshow-backdrop>
+
+    <!-- Cartelera -->
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col> Cartelera </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <app-slideshow-poster [movies]="moviesInTheatres"></app-slideshow-poster>
   </ng-container>
 </ion-content>
 
