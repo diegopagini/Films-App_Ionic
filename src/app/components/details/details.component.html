@@ -1,1 +1,60 @@
-<ng-container *ngIf="movieDetails$ | async as movieDetails"> </ng-container>
+<ion-content>
+  <ng-container *ngIf="movieDetails$ | async as movieDetails; else loading">
+    <ion-label class="titulo">
+      <h1>{{ movieDetails.title }}</h1>
+    </ion-label>
+    <img
+      *ngIf="movieDetails.backdrop_path"
+      [src]="movieDetails.backdrop_path | Image"
+      [alt]="movieDetails.title"
+      loading="lazy"
+    />
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4" class="poster-detalle-sobre">
+          <ion-card class="poster">
+            <img
+              *ngIf="movieDetails.poster_path"
+              [src]="movieDetails.poster_path | Image"
+              [alt]="movieDetails.title"
+              loading="lazy"
+              class="poster"
+            />
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-icon slot="start" color="primary" name="thumbs-up"></ion-icon>
+            <ion-label>Rating</ion-label>
+            <ion-note slot="end" color="primary">{{
+              movieDetails.vote_average
+            }}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-icon
+              slot="start"
+              color="primary"
+              name="earth-outline"
+            ></ion-icon>
+            <ion-label>Votos</ion-label>
+            <ion-note slot="end" color="primary">{{
+              movieDetails.vote_count
+            }}</ion-note>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>{{ movieDetails.overview }}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>
