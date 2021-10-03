@@ -48,12 +48,80 @@
     <ion-grid fixed>
       <ion-row>
         <ion-col size="12">
-          <ion-label>{{ movieDetails.overview }}</ion-label>
+          <ion-label
+            >{{ movieDetails.overview | slice: 0:hidden
+            }}<span
+              *ngIf="movieDetails.overview.length >= 150 && hidden === 150"
+              >...</span
+            ></ion-label
+          >
+          <ng-container *ngIf="movieDetails.overview.length > 150">
+            <ion-label
+              color="primary"
+              (click)="hidden = 5000"
+              *ngIf="hidden !== 5000"
+              >Leer más.</ion-label
+            >
+          </ng-container>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-chip *ngFor="let genre of movieDetails.genres" color="primary">
+            <ion-label>{{ genre.name }}</ion-label>
+          </ion-chip>
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col>
+          <ion-label>Actores</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-slides [options]="slidesOpts" *ngIf="movieCast$ | async as movieCast">
+      <ion-slide *ngFor="let cast of movieCast.cast">
+        <ion-card class="card-actor">
+          <img
+            *ngIf="cast.profile_path"
+            [src]="cast.profile_path | Image"
+            [alt]="cast.name"
+            loading="lazy"
+          />
+          <img
+            *ngIf="!cast.profile_path"
+            src="./assets/img/no-avatar.jpg"
+            loading="lazy"
+          />
+
+          <ion-label class="actor-name">{{ cast.name }}</ion-label>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
   </ng-container>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="start" name="arrow-undo-outline"></ion-icon>
+        <ion-label>Regresar</ion-label>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="favorite()">
+        <ion-icon slot="end" name="star-outline"></ion-icon>
+        <ion-label>Favorito</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
 
 <ng-template #loading>
   <app-spinner></app-spinner>
