@@ -7,14 +7,14 @@
     </ion-row>
   </ion-grid>
 
-  <div *ngFor="let genre of genres">
-    <ion-grid>
+  <div *ngFor="let movie of favoritesByGenre">
+    <ion-grid *ngIf="movie.movies.length > 0">
       <ion-row>
         <ion-col>
-          <h4>{{genre.name}}</h4>
+          <h4>{{movie.genre}}</h4>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <app-slideshow-poster [movies]="movies"> </app-slideshow-poster>
+    <app-slideshow-poster [movies]="movie.movies"> </app-slideshow-poster>
   </div>
 </ion-content>

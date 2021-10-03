@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Movie } from 'src/app/interfaces/interfaces';
+import { Movie, MovieDetail } from 'src/app/interfaces/interfaces';
 import { DetailsComponent } from '../details/details.component';
 
 @Component({
@@ -9,7 +9,7 @@ import { DetailsComponent } from '../details/details.component';
   styleUrls: ['./slideshow-backdrop.component.scss'],
 })
 export class SlideshowBackdropComponent {
-  @Input() movies: Movie[];
+  @Input() movies: MovieDetail[];
   public slidesOpts: Object = {
     slidesPerView: 1.3,
     freeMode: true,
