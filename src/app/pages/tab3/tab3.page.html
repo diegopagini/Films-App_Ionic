@@ -1,13 +1,20 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Tab 3 </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h3>Favoritos</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div *ngFor="let genre of genres">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h4>{{genre.name}}</h4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <app-slideshow-poster [movies]="movies"> </app-slideshow-poster>
+  </div>
 </ion-content>

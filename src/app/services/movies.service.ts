@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { promise } from 'selenium-webdriver';
 import { environment } from 'src/environments/environment';
 import {
   CreditsResponse,
+  Genre,
   MDBResponse,
   MovieDetail,
 } from '../interfaces/interfaces';
@@ -15,6 +18,7 @@ const baseUrl: string = environment.baseUrl;
   providedIn: 'root',
 })
 export class MoviesService {
+  public genres: any[] = [];
   private moviesInTheatres: string;
   private popularMoviesPage: number = 0;
   constructor(private http: HttpClient) {
@@ -41,6 +45,17 @@ export class MoviesService {
 
   public getMovie(search: string): Observable<MDBResponse> {
     return this.setQuery<MDBResponse>(`/search/movie?query=${search}`);
+  }
+
+  public loadGenres(): Promise<Genre[]> {
+    return new Promise((resolve) => {
+      this.setQuery(`/genre/movie/list?a=1`)
+        .pipe(take(1))
+        .subscribe((resp: any) => {
+          this.genres = resp['genres'];
+          resolve(this.genres);
+        });
+    });
   }
 
   private setQuery<T>(query: string) {
