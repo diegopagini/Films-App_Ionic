@@ -5,9 +5,18 @@ import { FormsModule } from '@angular/forms';
 import { Tab2Page } from './tab2.page';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
-  imports: [IonicModule, CommonModule, FormsModule, Tab2PageRoutingModule],
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    Tab2PageRoutingModule,
+    ComponentsModule,
+    PipesModule,
+  ],
   declarations: [Tab2Page],
 })
 export class Tab2PageModule {}

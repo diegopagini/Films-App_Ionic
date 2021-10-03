@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { MDBResponse, Movie } from '../interfaces/interfaces';
-import { MoviesService } from '../services/movies.service';
+import { MDBResponse, Movie } from '../../interfaces/interfaces';
+import { MoviesService } from '../../services/movies.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

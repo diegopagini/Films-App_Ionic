@@ -39,6 +39,10 @@ export class MoviesService {
     return this.setQuery<CreditsResponse>(`/movie/${id}/credits?a=1`);
   }
 
+  public getMovie(search: string): Observable<MDBResponse> {
+    return this.setQuery<MDBResponse>(`/search/movie?query=${search}`);
+  }
+
   private setQuery<T>(query: string) {
     query = baseUrl + query;
     query += `&api_key=${apiKey}&language=es&include_image_language=es`;

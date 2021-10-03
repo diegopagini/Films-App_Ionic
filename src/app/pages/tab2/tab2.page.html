@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Buscar Película </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-toolbar>
+  <ion-searchbar
+    placeholder="Buscar película"
+    animated
+    debounce="700"
+    [value]="textSearch"
+    (ionChange)="search($event)"
+  ></ion-searchbar>
+</ion-toolbar>
+
+<ion-content>
+  <ng-container *ngIf="{value: movie$ | async} as data">
+    <ion-grid *ngIf="searching" class="loading">
+      <ion-row>
+        <ion-col>
+          <app-spinner></app-spinner>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-list *ngIf="!data.value">
+      <ion-list-header>
+        <ion-label>Ideas</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let idea of ideas" (click)="searchIdea(idea)">
+        <ion-label color="primary">{{idea}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="6" *ngFor="let movie of data.value?.results">
+          <ion-card (click)="seeDetails(movie.id)">
+            <img [src]="movie.poster_path | Image" [alt]="movie.name" />
+            <ion-card-header>
+              <ion-card-subtitle>{{movie.release_date}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <h2>{{movie.title}}</h2>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>
