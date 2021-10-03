@@ -14,6 +14,7 @@ export class StorageService {
     private toastController: ToastController
   ) {
     this.storage.create();
+    this.loadFavorites();
   }
 
   private async presentToast(message: string) {
@@ -37,13 +38,25 @@ export class StorageService {
     if (exist) {
       this.movies = this.movies.filter((film: any) => film.id !== movie.id);
       message = 'Removido de favoritos';
-      this.presentToast(message);
     } else {
       this.movies.push(movie);
       message = 'Agregada a favoritos';
-      this.presentToast(message);
     }
 
+    this.presentToast(message);
     this.storage.set('movies', this.movies);
+    return !exist;
+  }
+
+  public async loadFavorites() {
+    const movies = await this.storage.get('movies');
+    this.movies = movies || [];
+    return this.movies;
+  }
+
+  public async movieExist(id: number) {
+    await this.loadFavorites();
+    const exist = this.movies.find((film) => film.id === id);
+    return exist ? true : false;
   }
 }

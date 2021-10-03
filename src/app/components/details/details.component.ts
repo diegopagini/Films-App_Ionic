@@ -20,6 +20,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     slidesPerView: 3.3,
     freeMode: true,
   };
+  public star: string = 'star-outline';
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -28,9 +29,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private storageService: StorageService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.movieDetails$ = this.moviesService.getMovieDetail(this.id);
     this.movieCast$ = this.moviesService.getMovieActors(this.id);
+
+    this.storageService
+      .movieExist(this.id)
+      .then((exist) => (this.star = exist ? 'star' : 'star-outline'));
   }
 
   public back() {
@@ -41,7 +46,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.movieDetails$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((movie: MovieDetail) => {
-        this.storageService.saveMovie(movie);
+        const exist = this.storageService.saveMovie(movie);
+        this.star = exist ? 'star' : 'star-outline';
       });
   }
 
