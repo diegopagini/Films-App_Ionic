@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable, of } from 'rxjs';
 import { DetailsComponent } from 'src/app/components/details/details.component';
@@ -9,13 +9,15 @@ import { MoviesService } from 'src/app/services/movies.service';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
   public textSearch: string;
   public ideas: string[] = [
+    'Avengers',
     'El señor de los anillos',
     'Spiderman',
-    'Avenger',
     'La vida es bella',
+    'Titanic',
+    'Navidad',
   ];
   public movie$: Observable<any>;
   public searching: boolean = false;
@@ -24,6 +26,10 @@ export class Tab2Page {
     private moviesService: MoviesService,
     private modalController: ModalController
   ) {}
+
+  ngOnInit(): void {
+    this.ideas.sort();
+  }
 
   public search(event): void {
     const value: string = event.detail.value;

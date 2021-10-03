@@ -1,15 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CreditsResponse, MovieDetail } from 'src/app/interfaces/interfaces';
 import { MoviesService } from 'src/app/services/movies.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
   @Input() id: number;
   public movieDetails$: Observable<MovieDetail>;
   public movieCast$: Observable<CreditsResponse>;
@@ -18,10 +20,12 @@ export class DetailsComponent implements OnInit {
     slidesPerView: 3.3,
     freeMode: true,
   };
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private moviesService: MoviesService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
@@ -33,5 +37,16 @@ export class DetailsComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  public favorite() {}
+  public favorite() {
+    this.movieDetails$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((movie: MovieDetail) => {
+        this.storageService.saveMovie(movie);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }
